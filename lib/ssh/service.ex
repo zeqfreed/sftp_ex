@@ -6,10 +6,12 @@ defmodule SSH.Service do
   """
 
   def start do
-      case  :ssh.start do
-       :ok -> Logger.info "Connected"
-       e -> S.handle_error(e)
-       end
+    case :application.ensure_all_started(:ssh) do
+      {:ok, _} ->
+        Logger.info "Connected"
+        :ok
+      e -> S.handle_error(e)
+    end
   end
 
   @doc """
