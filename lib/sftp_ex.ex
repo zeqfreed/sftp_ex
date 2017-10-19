@@ -15,9 +15,7 @@ defmodule SftpEx do
   def logging_functions do
     [disconnectfun: &SftpEx.Helpers.log_disconnect_func/1,
      unexpectedfun: &SftpEx.Helpers.log_unexpected_func/2,
-     ssh_msg_debug_fun: &SftpEx.Helpers.ssh_msg_debug_fun/4,
-     failfun: &SftpEx.Helpers.log_ssh_fail_func/3,
-     connectfun: &SftpEx.Helpers.connect_log_func/3]
+     ssh_msg_debug_fun: &SftpEx.Helpers.ssh_msg_debug_fun/4]
   end
 
   @doc """
@@ -252,14 +250,6 @@ defmodule SftpEx.Helpers do
   def log_unexpected_func(message, peer) do
      Logger.debug "Unexpected event occurred for peer #{inspect peer} with message: #{inspect message}"
      :report
-  end
-
-  def log_ssh_fail_func(user, peer, reason) do
-     Logger.debug "Unexpected event occurred for peer #{inspect peer} and #{inspect user} with message: #{inspect reason}"
-  end
-
-  def connect_log_func(user, peer, method) do
-     Logger.debug "Unexpected event occurred for peer #{inspect peer} and user #{inspect user} with message: #{inspect method}"
   end
 
   def ssh_msg_debug_fun(connection_ref, always_display, msg, language_tag) do
